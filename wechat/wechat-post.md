@@ -32,7 +32,7 @@ ChatGPT、Claude、Gemini……你是不是也想用，却卡在"怎么订阅"�
 
 打开App Store，切换为你的美区Apple ID并保持登录状态。
 
-![图片](assets/appstore-mg.png)
+![图片](../assets/appstore-mg.png)
 
 然后搜索"ChatGPT"，下载安装，并登录你的ChatGPT账号。
 
@@ -53,7 +53,7 @@ ChatGPT、Claude、Gemini……你是不是也想用，却卡在"怎么订阅"�
 
 https://www.apple.com/shop/buy-giftcard/giftcard
 
-![图片](assets/apple-gift-card.png)
+![图片](../assets/apple-gift-card.png)
 
 ### 填写选项指引
 
@@ -71,15 +71,15 @@ https://www.apple.com/shop/buy-giftcard/giftcard
 
 来到购物袋页面，点击 **Check Out**。
 
-![图片](assets/apple-gift-card-bag-m1.png)
+![图片](../assets/apple-gift-card-bag-m1.png)
 
 选择 **Continue as Guest**，无需登录Apple ID。
 
-![图片](assets/apple-gift-card-continue-as-guest.png)
+![图片](../assets/apple-gift-card-continue-as-guest.png)
 
 支付方式选择 **Credit or Debit Card**，输入你的VISA/MasterCard卡号和CVV。
 
-![图片](assets/apple-gift-card-credit-m1.png)
+![图片](../assets/apple-gift-card-credit-m1.png)
 
 ### 填写账单地址
 
@@ -89,19 +89,19 @@ https://www.meiguodizhi.com
 
 打开后往下滑，选择免税州——**俄勒冈州（Oregon）**。
 
-![图片](assets/meiguodizhi-m1.png)
+![图片](../assets/meiguodizhi-m1.png)
 
 将生成的地址信息对应填入 Billing Address 中，邮箱可以填自己的真实邮箱。
 
-![图片](assets/meiguodizhi-input.png)
+![图片](../assets/meiguodizhi-input.png)
 
 填写完毕后，点击 **Continue to Review**，拉到页面底部，勾选 **Terms & Conditions**，然后点击 **Place Your Order**。
 
-![图片](assets/apple-gift-pay-continue-m1.png)
+![图片](../assets/apple-gift-pay-continue-m1.png)
 
 付款成功！接下来等待10~20分钟，苹果会将礼品卡兑换码发送到你填写的邮箱。
 
-![图片](assets/apple-gift-card-processing-m1.png)
+![图片](../assets/apple-gift-card-processing-m1.png)
 
 ---
 
@@ -111,7 +111,7 @@ https://www.meiguodizhi.com
 
 打开App Store，进入账户页面，点击"兑换礼品卡或代码"，输入兑换码完成充值。
 
-![图片](assets/appstore-charge.png)
+![图片](../assets/appstore-charge.png)
 
 ---
 
@@ -121,7 +121,7 @@ https://www.meiguodizhi.com
 
 系统会自动使用你的Apple账户余额完成支付。
 
-![图片](assets/gpt-upgrade.png)
+![图片](../assets/gpt-upgrade.png)
 
 搞定！
 
