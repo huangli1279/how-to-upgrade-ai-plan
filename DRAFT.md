@@ -20,7 +20,7 @@
 
 首先在App Store中切换成美区ID，并全程保持美区ID登录
 
-![图片](appstore-mg.png)
+![图片](assets/appstore-mg.png)
 
 搜索并下载GPT，然后登录自己的GPT账号
 
@@ -36,7 +36,7 @@
 
 https://www.apple.com/shop/buy-giftcard/giftcard
 
-![图片](apple-gift-card.png)
+![图片](assets/apple-gift-card.png)
 
 选项填写指引：
 
@@ -48,15 +48,15 @@ https://www.apple.com/shop/buy-giftcard/giftcard
 
 然后点击底部的 Add to Bag，来到结算台点击 Check Out
 
-![图片](apple-gift-card-bag-m1.png)
+![图片](assets/apple-gift-card-bag-m1.png)
 
 然后点击 Continues as Guest
 
-![图片](apple-gift-card-continue-as-guest.png)
+![图片](assets/apple-gift-card-continue-as-guest.png)
 
 选择 Credit or Debit Card，这里输入 VISA/Master 卡号和 CVV
 
-![图片](apple-gift-card-credit-m1.png)
+![图片](assets/apple-gift-card-credit-m1.png)
 
 #### 2.2 填写账单地址
 
@@ -66,26 +66,34 @@ https://www.meiguodizhi.com
 
 往下选择免税州 俄勒冈州
 
-![图片](meiguodizhi-m1.png)
+![图片](assets/meiguodizhi-m1.png)
 
 然后将上面的信息搬运到 Billing Address 中，邮箱可以填自己的邮箱
 
-![图片](meiguodizhi-input.png)
+![图片](assets/meiguodizhi-input.png)
 
 点击底部的 Continue to Review，移动到 Checkout 底部，勾选 Terms & Conditions 然后再点击 Place Your Order
 
-![图片](apple-gift-pay-continue-m1.png)
+![图片](assets/apple-gift-pay-continue-m1.png)
 
 此时，付款完成，等待发送礼品卡兑换码到邮箱，预计等待10~20分钟，查收礼品卡邮件中的礼品码
 
-![图片](apple-gift-card-processing-m1.png)
+![图片](assets/apple-gift-card-processing-m1.png)
 
 ### 3. 使用礼品卡充值美区ID
 
 在 App Store 中输入邮件中收到的礼品码进行充值
 
-![图片](appstore-charge.png)
+![图片](assets/appstore-charge.png)
 
 ### 4. 订阅GPT Plus服务
 
-![图片](gpt-upgrade.png)
+使用Apple账号余额订阅服务
+
+![图片](assets/gpt-upgrade.png)
+
+### 5. 总结
+
+使用这一套订阅国外模型官方服务的全流程，其他的Claude、Gemini、Grok等都可以通过这种方式完成订阅
+
+使用官方服务，告别各类中转站
