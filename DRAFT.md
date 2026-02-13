@@ -1,14 +1,14 @@
 ## 目的
 
-我想写一篇关于如何使用一套方法安全订阅大部分国外模型的官方服务的公众号文章
+我想写一篇关于 如何使用一套方法安全订阅国外模型的官方服务 的公众号文章
 
-## 前提
+## 前提需要在开头说明
 
-这篇文章不会涉及如何科学上网的部分，这点需要在开头指出
+用户需要具备上网的条件，但本篇文章不涉及如何上网的部分
 
-然后苹果用户需要有美区苹果ID，这是前提，但这篇文章不会教怎么注册美区苹果ID
+苹果用户需要有美区ID，但本篇文章没有怎么注册美区苹果ID的部分
 
-需要提前具备VISA或Master信用卡
+而且需要提前准备VISA或Master信用卡
 
 ## 正文内容
 
@@ -18,7 +18,7 @@
 
 ### 1. 在App Store中登录美区ID
 
-首先在App Store中切换成美区ID
+首先在App Store中切换成美区ID，并全程保持美区ID登录
 
 ![图片](appstore-mg.png)
 
@@ -46,55 +46,39 @@ https://www.apple.com/shop/buy-giftcard/giftcard
 - Enter your delivery details. - **重要**：这里都填自己的名字和邮箱，礼品卡的激活码会发送到这里填入的邮箱
 - Want to add a personalized message? - No message
 
-然后点击底部的 Add to Bag
+然后点击底部的 Add to Bag，来到结算台点击 Check Out
 
-![图片](apple-gift-card-add-to-bag.png)
-
-来到结算台点击 Check Out
-
-![图片](apple-gift-card-bag.png)
+![图片](apple-gift-card-bag-m1.png)
 
 然后点击 Continues as Guest
 
 ![图片](apple-gift-card-continue-as-guest.png)
 
-选择 Credit or Debit Card 
+选择 Credit or Debit Card，这里输入 VISA/Master 卡号和 CVV
 
-![图片](apple-gift-card-credit.png)
-
-这里输入 VISA/Master 卡号和 CVV
-
-![图片](apple-gift-card-credit-input.png)
+![图片](apple-gift-card-credit-m1.png)
 
 #### 2.2 填写账单地址
 
-填写账单地址这里需要用到一些模拟信息，这里会使用一个工具 https://www.meiguodizhi.com/
+填写账单地址这里需要用到一些模拟信息，这里会使用一个工具
 
-![图片](meiguodizhi.png)
+https://www.meiguodizhi.com
 
 往下选择免税州 俄勒冈州
 
-![图片](meiguodizhi-or.png)
+![图片](meiguodizhi-m1.png)
 
 然后将上面的信息搬运到 Billing Address 中，邮箱可以填自己的邮箱
 
 ![图片](meiguodizhi-input.png)
 
-点击底部的 Continue to Review
+点击底部的 Continue to Review，移动到 Checkout 底部，勾选 Terms & Conditions 然后再点击 Place Your Order
 
-![图片](apple-gift-pay-continue.png)
+![图片](apple-gift-pay-continue-m1.png)
 
-移动到 Checkout 底部，勾选 Terms & Conditions 然后再点击 Place Your Order
+此时，付款完成，等待发送礼品卡兑换码到邮箱，预计等待10~20分钟，查收礼品卡邮件中的礼品码
 
-![图片](apple-gift-pay-place.png)
-
-此时，付款完成，等待发送礼品卡兑换码到邮箱，预计等待10~20分钟
-
-![图片](apple-gift-card-processing.png)
-
-一段时间后，查收礼品卡邮件中的礼品码
-
-![图片](apple-gift-card-code.png)
+![图片](apple-gift-card-processing-m1.png)
 
 ### 3. 使用礼品卡充值美区ID
 
@@ -102,3 +86,6 @@ https://www.apple.com/shop/buy-giftcard/giftcard
 
 ![图片](appstore-charge.png)
 
+### 4. 订阅GPT Plus服务
+
+![图片](gpt-upgrade.png)
