@@ -10,7 +10,8 @@
       "Bash(git -C \"C:\\\\Users\\\\cris\\\\Projects\\\\how-to-upgrade-ai-plan\" push)",
       "Bash(test:*)",
       "Bash(npx:*)",
-      "Bash(bun install:*)"
+      "Bash(bun install:*)",
+      "Bash(git rm:*)"
     ]
   }
 }
