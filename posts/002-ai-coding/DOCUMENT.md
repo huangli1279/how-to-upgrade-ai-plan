@@ -23,62 +23,18 @@ AI 工具介绍  →  Agent Skills  →  AI Coding 实战
 
 ---
 
-## 第二部分：AI 工具全景（20 分钟）
+## 第二部分：AI 工具介绍（20 分钟）
 
-AI 工具种类非常多，这里不打算做一个大而全的盘点。我聚焦在最后那个宏观经济报告 Web App 项目里实际用到的工具，按用途分四类来介绍——正好也是第四部分会串起来演示的完整工作流。
+以项目里实际用到的工具为主，按用途分四类快速过一遍。
 
----
-
-### 对话类
-
-最基础的一类，自然语言提问，直接给答案，开网页就能用。写报告、整理纪要、润色邮件都是高频场景；拿来解释或优化 SQL 也非常顺手——把查询粘进去，问它有没有性能问题，它会指出哪个 JOIN 可能导致全表扫描，并给出改写建议。
-
-| 工具 | 特点 | 入口 |
+| 类型 | 代表工具 | 一句话定位 |
 |---|---|---|
-| **Claude** | Anthropic 出品，长文本和分析能力强 | [claude.ai](https://claude.ai) |
-| **ChatGPT** | OpenAI 出品，生态最成熟，插件丰富 | [chatgpt.com](https://chatgpt.com) |
-| **Gemini** | Google 出品，与 Google Workspace 深度集成 | [gemini.google.com](https://gemini.google.com) |
-| **DeepSeek** | 国产，推理能力强，中文理解好，免费 | [chat.deepseek.com](https://chat.deepseek.com) |
-| **Kimi** | 月之暗面出品，长文档处理能力强，支持上传文件 | [kimi.moonshot.cn](https://kimi.moonshot.cn) |
+| **对话类** | Claude / ChatGPT / Gemini / DeepSeek / Kimi | 自然语言问答，写报告、整理纪要、分析数据的高频入口 |
+| **知识管理类** | NotebookLM / ima.copilot | 基于上传的文档来回答，不凭空生成，有来源 |
+| **原型生成类** | Google AI Studio / Bolt.new / v0.dev / Lovable | 描述需求直接生成可运行的应用，不需要动手写代码 |
+| **AI IDE 类** | Claude Code / Cursor / Windsurf / GitHub Copilot | 直接读项目文件、运行代码、改文件，AI 真正帮你写代码 |
 
----
-
-### 知识管理类
-
-和对话类的区别在于：它是基于你上传的材料来回答，不会凭空生成内容。把公司报告、行业文章一起上传，问"我们的业务和行业趋势有什么差距"，它给的是有来源的分析。
-
-| 工具 | 特点 | 入口 |
-|---|---|---|
-| **NotebookLM** | Google 出品，支持多文档联合问答，可生成播客摘要 | [notebooklm.google.com](https://notebooklm.google.com) |
-| **ima.copilot** | 腾讯出品，打通微信公众号生态，支持共享知识库协作，适合国内用户 | [ima.qq.com](https://ima.qq.com) |
-
----
-
-### 原型生成类
-
-说清楚想要什么，AI 直接生成可以跑的应用，不需要动手写代码。比如告诉它"做一个展示 GDP 数据的网页，有折线图和数据表格"，它输出一个完整的 React 项目——不用知道 React 是什么。
-
-| 工具 | 特点 | 入口 |
-|---|---|---|
-| **Google AI Studio** | 多模态输入，可上传文件或截图直接生成代码 | [aistudio.google.com](https://aistudio.google.com) |
-| **Bolt.new** | 全栈应用生成，浏览器内直接运行，适合快速验证想法 | [bolt.new](https://bolt.new) |
-| **v0.dev** | Vercel 出品，专注 React UI 组件生成，质量高 | [v0.dev](https://v0.dev) |
-| **Lovable** | 对非技术背景友好，支持 GitHub 同步 | [lovable.dev](https://lovable.dev) |
-
----
-
-### AI IDE 类
-
-前面几类基本是"问答"模式，这类不一样——它可以直接读你的项目文件、运行代码、改文件，是真正意义上的 AI 在帮你写代码。
-
-| 工具 | 定位 | 适合谁 |
-|---|---|---|
-| **Claude Code** | 命令行 AI 编程助手，能操作文件、运行命令、安装 Agent Skills | 想深度使用 AI 辅助开发的人 |
-| **Cursor** | AI 增强版 VS Code，多文件编辑能力强，界面友好 | 有一定代码基础，想提高开发效率 |
-| **Windsurf** | 价格更低，具备 Agentic 能力 | 想用 AI IDE 但预算有限 |
-| **GitHub Copilot** | 代码补全为主，集成在各主流编辑器 | 已有开发习惯，想要 AI 辅助补全 |
-
-后面的 Agent Skills Demo 和 AI Coding 实战都会用 Claude Code。
+后面的 Demo 会用到其中的 NotebookLM、Google AI Studio 和 Claude Code，第三部分和第四部分再具体展开。
 
 ---
 
