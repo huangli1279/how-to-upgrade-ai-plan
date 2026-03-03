@@ -9,8 +9,6 @@
 - **02 Agent Skills**：专业技能包的原理、生态，以及装了之前和之后的实际效果对比
 - **03 AI Coding 工作流**：五步从数据到报告上线的完整过程
 
----
-
 ## 01 做这份报告用到的工具
 
 做这份报告用到了四类工具：
@@ -24,7 +22,7 @@
 
 这份报告具体用到了 NotebookLM、Google AI Studio 和 Claude Code，后面会展开说。
 
----
+选型逻辑是：对话类工具没法一次性消化 100+ 篇文档（context window 有上限），所以内容收集这件事交给原生支持大规模文档检索的 NotebookLM；框架原型用免费的 Google AI Studio 快速生成，省掉反复调风格时的 token 消耗；本地代码迭代、填充内容、处理细节，才是 Claude Code 最擅长的事。三类工具串联，各干各最擅长的部分。
 
 ## 02 Agent Skills：让 AI 在专业场景下变专业
 
@@ -38,7 +36,7 @@ Agent Skills 是一套开放标准，本质是给 AI 安装"专业技能包"。�
 
 ### 生态现状
 
-Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Codex、Cursor、GitHub、Microsoft、Figma、Atlassian 都已经采用。Vercel 随后推出了配套的 [skills.sh](https://skills.sh)——一个开放的 skill 目录，可以搜索和安装各类 skill，支持 Claude Code、Cursor、GitHub Copilot 等主流 AI IDE。
+Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Codex、Cursor、GitHub、Microsoft 已将其集成进各自产品。Vercel 随后推出了配套的 [skills.sh](https://skills.sh)——一个开放的 skill 目录，可以搜索和安装各类 skill，支持 Claude Code、Cursor、GitHub Copilot 等主流 AI IDE。
 
 ### 实际效果对比
 
@@ -50,8 +48,6 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 - 31 个省级行政区的 GDP 累计值
 
 **场景**：用同一个提示词让 Claude Code 读取这份数据，分别在安装 skill 前后各生成一份报告，直接对比差距。
-
----
 
 #### 安装 Skill 之前
 
@@ -70,8 +66,6 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 - 区域分析只有规模排名，广东第一、江苏第二，但没有增速分化，不知道谁在加速、谁在减速
 - 结论全是定性判断，"增速保持稳定"——稳定到什么程度？没有数据支撑
 
----
-
 #### 安装 Skill
 
 Skill 可以在 [skills.sh](https://skills.sh) 搜索和安装，用 `npx skills add` 命令一行搞定：
@@ -79,8 +73,6 @@ Skill 可以在 [skills.sh](https://skills.sh) 搜索和安装，用 `npx skills
 ```bash
 npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 ```
-
----
 
 #### 安装之后
 
@@ -104,8 +96,6 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 - IT 服务业（信息传输、软件和信息技术服务业）连续 8 个季度保持 10%+ 增速——从 2024Q1 的 13.7% 到 2025Q4 的 10.7%，是全文唯一的强正向信号，被单独标注为「数字经济驱动的结构性亮点」
 - 区域格局出现逆转：西部省份省均增速（4.4%）高于东部（3.9%），属近年罕见格局，报告将其标注为值得追踪的趋势性变化，而不只是规模排名
 
----
-
 为了让对比更客观中立，没有用 Claude 来评估自己的输出——评自己总有偏袒之嫌。而是把两份报告交给 OpenAI Codex，以「以资深宏观分析师视角，对以下 7 个维度分别打分（满分 10 分），结合权重算出加权总分，每项附简短评语」为提示词，让竞品 AI 来裁判。得分如下：
 
 | 评价维度 | 权重 | 安装前 | 安装后 |
@@ -125,17 +115,15 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 我觉得这个类比很贴切：Agent Skills 就是新时代的 App——Agent 是新 OS，Skill 是装在上面的专业能力包，写一次、到处用、社区共享，和当年 App Store 的逻辑如出一辙。不需要懂 Prompt 工程，装个 Skill 就能让 AI 在特定领域直接变专业。
 
----
-
 ## 03 完整工作流：五步从数据到报告上线
 
 这份报告是我和璐源、天琦三个人一起完成的。NotebookLM、Google AI Studio、Claude Code、Agent Skills——这四个工具在整个过程里是串联关系，每一步各有分工。
 
----
-
 ### Step 1：Claude Code 提炼报告编写指南
 
-在做任何内容之前，先用 Claude Code 读取历史上积累的 7 篇宏观经济分析报告，让它从中提炼出一份指南文档——宏观经济分析报告应该包含哪些模块、每个模块的写作逻辑是什么、有哪些关键指标必须覆盖。之所以用历史报告而非直接让 AI 写一份通用指南，是为了让指南延续团队自身的分析框架和行文风格，而不是套用 AI 的默认模板。
+这里所说的「从零」，是指从原始数据和提示词出发，不手动写代码、不手动排版——但并不意味着没有任何积累。团队历史上已有 7 篇宏观经济分析报告，这是真实的专业积累，Step 1 正是要把它用起来。
+
+在做内容之前，先用 Claude Code 读取这 7 篇历史报告，让它从中提炼出一份指南文档——宏观经济分析报告应该包含哪些模块、每个模块的写作逻辑是什么、有哪些关键指标必须覆盖。之所以用历史报告而非直接让 AI 写一份通用指南，是为了让指南延续团队自身的分析框架和行文风格，而不是套用 AI 的默认模板。
 
 提炼出来的指南确立了两个核心结构：
 
@@ -147,11 +135,9 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 这份指南后续会作为整份报告的内容基准，带入 Step 2，确保 AI 产出的内容符合专业报告的分析逻辑。
 
----
-
 ### Step 2：NotebookLM 收集内容 + 生产初稿
 
-这里选 NotebookLM 而不是直接让 Claude Code 读取本地文件，是因为参考文章数量非常多——这份报告一共参考了 105 篇，来自国家统计局、微信公众号等渠道的当季解读文章，文档体量远超 Claude Code 单次 context window 的上限，无法一次性全部读入。NotebookLM 的原生 RAG 架构专为大量文档的联合检索设计，上传后可以跨文档问答，不受 context 大小限制。
+这里选 NotebookLM 而不是直接让 Claude Code 读取本地文件，是因为参考文章数量非常多——这份报告一共参考了 105 篇，来自国家统计局、微信公众号等渠道的当季解读文章，文档体量远超 Claude Code 单次 context window 的上限，无法一次性全部读入。NotebookLM 的原生 RAG 架构专为大量文档的联合检索设计，上传后即可以完成跨文档问答。
 
 在 NotebookLM 里上传这 105 篇宏观经济解读文章，同时把 Step 1 生成的编写指南放进 NotebookLM 的系统提示词（Instructions）里——这样每次提问时 AI 都会自动按照指南的框架和写作逻辑来产出内容，不需要每次重复粘贴。然后按章节逐一提问：
 
@@ -169,13 +155,11 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 这一步做的不只是信息收集，而是同时完成内容生产——产出的已经是按专业报告格式和分析逻辑组织好的各章节初稿，可以直接进入后续流程。
 
----
-
 ### Step 3：Google AI Studio 生成 React 框架
 
 这一步的目标不是生成完整内容，只是拿到一个可以跑起来的基础项目模板——页面结构、视觉风格、交互逻辑定好，内容全部留空，后续交给 Claude Code 在本地迭代填充。
 
-选 Google AI Studio 有个很实际的原因：**它免费，而且用的是 Gemini 3 Pro，做前端效果很不错。** 模板阶段往往要反复调风格——换布局、换配色、换交互方式，这个阶段如果用 Claude Code 来回生成，token 额度消耗会很快。用 AI Studio 把框架定好，再交给 Claude Code 做内容填充，是更省成本的做法。
+选 Google AI Studio 有个很实际的原因：**它免费，而且可以使用 Gemini 3 Pro，做前端效果很不错。** 模板阶段往往要反复调风格——换布局、换配色、换交互方式，这个阶段如果用 Claude Code 来回生成，token 额度消耗会很快。用 AI Studio 把框架定好，再交给 Claude Code 做内容填充，是更省成本的做法。
 
 提示词如下：
 
@@ -190,8 +174,6 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 - **"16:9，自适应占满屏幕"和交互方式**：确保输出是一个真正可以演示的系统，而不是静态页面
 
 AI Studio 直接输出一套可以运行的 React 项目框架，下载到本地，作为后续迭代的起点。
-
----
 
 ### Step 4：AI Coding 工具 + Agent Skill 迭代
 
@@ -220,11 +202,13 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 
 按这套做法完成全部迭代后，整个项目共有 33 个组件文件（6 个基础组件 + 过渡页 + 各章节内容页）、27 个独立的数据文件（原始 xlsx 转换而来的 TypeScript 格式），总代码量约 7000 行。
 
----
+### Step 5：部署上线
 
-### Step 5：最终成品
+完成全部代码迭代后，部署到腾讯云，浏览器直接访问：**[https://hongguanppt.top](https://hongguanppt.top)**
 
-最终交付的是一套可在浏览器直接运行的交互式演示系统，共 **40 张幻灯片**，16:9 自适应铺满屏幕，支持鼠标滚轮和键盘上下键切换。
+**最终交付：40 张幻灯片的交互式演示系统**
+
+一套可在浏览器直接运行的交互式演示系统，共 **40 张幻灯片**，16:9 自适应铺满屏幕，支持鼠标滚轮和键盘上下键切换。
 
 整体结构：**封面 + 目录 + 8 个分析章节 + 结束页**，章节之间各有一张过渡页衔接：
 
@@ -239,13 +223,13 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 | 07 | 财政分析 | 看钱袋子 | 1 |
 | 08 | 金融数据分析 | 看资金活性 | 4 |
 
-每张内容页由**论点卡片 + 折线图/堆叠柱状图 + 数据表格**组成，复用 `BaseContentSlide`、`BaseCard`、`BaseLineChart`、`BaseStackedBarChart`、`BaseTable` 等基础组件，视觉一致性由组件自身保证。图表数据来自各章节对应的 TypeScript 数据文件（从原始 xlsx 转换后维护在代码仓库中）。
+每张内容页由**论点卡片 + 折线图/堆叠柱状图 + 数据表格**组成，复用 `BaseContentSlide`、`BaseCard`、`BaseLineChart`、`BaseStackedBarChart`、`BaseTable` 等基础组件，视觉一致性由组件自身保证。图表数据来自各章节对应的数据文件。
 
-整体视觉延续 Step 3 的麦肯锡风格——深蓝主色（`#051c2c`）、极简网格布局、入场动效——无需设计工具，浏览器打开即可用于演示或分发。
+整体视觉延续 Step 3 的深蓝主色（`#051c2c`）、极简网格布局、入场动效——无需设计工具，浏览器打开即可用于演示或分发。
 
-*（截图待补充）*
+*（成品截图见下）*
 
----
+## 04 总结
 
 整个工作流的核心逻辑可以用一句话总结：**专业工具分段负责，Agent Skill 在关键节点注入专业规范**。
 
