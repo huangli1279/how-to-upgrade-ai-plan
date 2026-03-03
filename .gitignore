@@ -26,6 +26,5 @@ Thumbs.db
 
 # Local agent/skill configs (not committed to repo)
 .agents/
-.baoyu-skills/
 .claude/
 skills-lock.json
