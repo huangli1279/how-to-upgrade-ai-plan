@@ -49,7 +49,7 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 - 需求侧贡献率（最终消费 / 资本形成 / 货物和服务净出口）
 - 31 个省级行政区的 GDP 累计值
 
-**场景**：用同一个提示词让 Claude Code 读取这份数据，分别在安装 skill 前后各生成一份报告，对比差距。这里的目标不是证明哪份更好，而是展示两种报告的分工——安装 skill 之前适合快速建立全景，安装之后适合精准深挖（结论在最后一并说明）。
+**场景**：用同一个提示词让 Claude Code 读取这份数据，分别在安装 skill 前后各生成一份报告，直接对比差距。
 
 ---
 
@@ -77,7 +77,7 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 Skill 可以在 [skills.sh](https://skills.sh) 搜索和安装，用 `npx skills add` 命令一行搞定：
 
 ```bash
-npx skills add statistical-analysis
+npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 ```
 
 ---
@@ -119,11 +119,9 @@ npx skills add statistical-analysis
 | 前瞻性与实用价值 | 10% | 7.0 | 8.5 |
 | **加权总分** | **100%** | **7.40** | **8.90** |
 
-差距最大的是"统计分析方法"（权重最高的一项，6.0 vs 9.5）。评价原文的说法是：安装前的报告是宏观经济分析的"导论"，安装后的报告是同一数据集的"论文"，最佳用法是组合使用——用前者快速建立全景，再用后者精准深挖。
+差距最大的是"统计分析方法"（权重最高的一项，6.0 vs 9.5）。安装前的报告停留在描述层面，只是把数据读出来；安装后的报告才是真正意义上的专业分析——识别异常值、量化价格效应、追踪风险路径，每个结论都有数据支撑。
 
-值得一提的是，可读性这个维度反而是安装前略高——统计方法多了，技术密度也上去了，普通读者的阅读门槛会变高。这也说明 skill 提升的是专业分析深度，不是万能的。
-
-同样的 AI，同样的数据——装了统计分析 skill，分析从"描述性概览"变成了"统计驱动的经济诊断"。
+同样的 AI，同样的数据，同样的提示词——装了统计分析 skill，分析质量从"描述性概览"变成了"统计驱动的经济诊断"。
 
 我觉得这个类比很贴切：Agent Skills 就是新时代的 App——Agent 是新 OS，Skill 是装在上面的专业能力包，写一次、到处用、社区共享，和当年 App Store 的逻辑如出一辙。不需要懂 Prompt 工程，装个 Skill 就能让 AI 在特定领域直接变专业。
 
@@ -177,7 +175,7 @@ npx skills add statistical-analysis
 
 这一步的目标不是生成完整内容，只是拿到一个可以跑起来的基础项目模板——页面结构、视觉风格、交互逻辑定好，内容全部留空，后续交给 Claude Code 在本地迭代填充。
 
-选 Google AI Studio 有个很实际的原因：**它免费，而且用的是 Gemini 2.0 Pro，做前端效果不错。** 模板阶段往往要反复调风格——换布局、换配色、换交互方式，这个阶段如果用 Claude Code 来回生成，token 额度消耗会很快。用 AI Studio 把框架定好，再交给 Claude Code 做内容填充，是更省成本的做法。
+选 Google AI Studio 有个很实际的原因：**它免费，而且用的是 Gemini 3 Pro，做前端效果很不错。** 模板阶段往往要反复调风格——换布局、换配色、换交互方式，这个阶段如果用 Claude Code 来回生成，token 额度消耗会很快。用 AI Studio 把框架定好，再交给 Claude Code 做内容填充，是更省成本的做法。
 
 提示词如下：
 
@@ -195,33 +193,32 @@ AI Studio 直接输出一套可以运行的 React 项目框架，下载到本地
 
 ---
 
-### Step 4：Claude Code + Agent Skill 迭代
+### Step 4：AI Coding 工具 + Agent Skill 迭代
 
-和 Section 02 展示的统计分析 skill 同样的机制，这里为 React 开发装上专业规范——AI Studio 下载下来的项目是 React 框架，在 Claude Code 里先装上 Vercel Labs 维护的 `vercel-react-best-practices` skill（同样从 [skills.sh](https://skills.sh) 安装）。这个 skill 按影响程度分级，涵盖消除数据瀑布、包大小优化、服务端性能、重新渲染优化等方向——装上之后，Claude Code 在迭代修改时会自动按照这套规范来生成代码，避免写出性能问题或结构混乱。
+和 Section 02 展示的统计分析 skill 同样的机制，这里为 React 开发装上专业规范——AI Studio 下载下来的项目是 React 框架，在 AI Coding 工具里先装上 Vercel Labs 维护的 `vercel-react-best-practices` skill（同样从 [skills.sh](https://skills.sh) 安装）。这个 skill 按影响程度分级，涵盖消除数据瀑布、包大小优化、服务端性能、重新渲染优化等方向——装上之后，AI Coding 工具在迭代修改时会自动按照这套规范来生成代码，避免写出性能问题或结构混乱。
 
 ```bash
-# 在 skills.sh 搜索 vercel-react-best-practices，然后安装
-npx skills add vercel-react-best-practices
+npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices
 ```
 
 然后用自然语言驱动迭代：
 
-> "把 Step 2 整理的报告内容填入对应幻灯片，数据部分从原始 xlsx 转成 TypeScript 数据文件后接入图表，折线图展示趋势"
+> "把 Step 2 整理的报告内容填入对应幻灯片"
 
-Claude Code 读取项目文件，结合 skill 里的规范，自动改代码、填内容、调样式。
+AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码、填内容、调样式。
 
-**一个让迭代过程顺畅的关键做法**：在开始填内容之前，先让 Claude Code 把可复用的元素抽出来做成基础组件——`BaseContentSlide`（幻灯片容器）、`BaseCard`（论点卡片）、`BaseLineChart`（折线图）、`BaseBarChart` / `BaseStackedBarChart`（柱状图）、`BaseTable`（表格）。
+**一个让多人协作顺畅的关键做法**：在开始填内容之前，先把可复用的元素抽出来做成基础组件——`BaseContentSlide`（幻灯片容器）、`BaseCard`（论点卡片）、`BaseLineChart`（折线图）、`BaseBarChart` / `BaseStackedBarChart`（柱状图）、`BaseTable`（表格）。
 
-这样做的原因很直接：如果每一页幻灯片都是 Claude Code 独立生成的，随着迭代次数增加，不同页面的样式会开始出现微小偏差——这页的卡片圆角是 8px，那页是 12px；这页的图表配色用了蓝色系，那页变成了绿色。到后期会发现整体风格越来越散，而且改起来要逐页调，代价很高。
+这样做的原因在多人协作场景下尤其直接：这份报告里，三个人用了不同的工具和模型——有人用 Claude Code，有人用 Cursor，有人用 Trae，还有部分内容借助了 OpenAI Codex。风格漂移来自两个层面：工具层面，不同 IDE 的代码生成习惯不同；模型层面，Claude 和 GPT 对同一个组件的默认实现方式就不一样，圆角、间距、配色倾向各有各的偏好。两个变量叠在一起，如果每一页幻灯片都由各人用自己的工具和模型独立生成，等到合并时整体风格几乎必然散掉，逐页对齐的代价极高。
 
-基础组件做好之后，每一页新幻灯片只是在组合复用这些组件，视觉一致性由组件自身保证，不依赖 AI 每次生成时的\"记忆\"——这才是可以持续迭代的结构。
+基础组件做好之后，不管谁用什么工具生成新的幻灯片页，都是在组合复用同一套组件。视觉一致性由组件自身保证，不依赖某个 AI 的\"记忆\"，也不依赖团队成员之间的口头约定——这才是可以多人持续迭代的结构。
 
 **另一个配套做法**：每一页幻灯片对应一个独立的 `.tsx` 文件，比如 `CoverSlide.tsx`、`TableOfContentsSlide.tsx`、`ContentSlide05.tsx`。好处有两层：
 
 - **对人**：根据网页上显示的页码，能立刻知道要改哪个文件，不用在代码里翻找
-- **对 AI**：修改某一页时直接 `@ContentSlide05.tsx` 定位，Claude Code 不需要扫描整个项目才能确定要改哪里。全局查询会消耗大量 token，也会占用当次 session 的 context window——文件拆得细，每次对话的上下文就能留给真正有用的信息
+- **对 AI**：修改某一页时直接 `@ContentSlide05.tsx` 定位，AI 不需要扫描整个项目才能确定要改哪里。全局查询会消耗大量 token，也会占用当次 session 的 context window——文件拆得细，每次对话的上下文就能留给真正有用的信息
 
-按这套做法完成全部迭代后，整个项目共有 33 个组件文件（6 个基础组件 + 过渡页 + 各章节内容页）、27 个独立的数据文件（原始 xlsx 转换而来的 TypeScript 格式），总代码量约 7000 行——这是三周内 Claude Code 直接产出的规模，没有手动写过一行样式或图表逻辑。
+按这套做法完成全部迭代后，整个项目共有 33 个组件文件（6 个基础组件 + 过渡页 + 各章节内容页）、27 个独立的数据文件（原始 xlsx 转换而来的 TypeScript 格式），总代码量约 7000 行。
 
 ---
 
