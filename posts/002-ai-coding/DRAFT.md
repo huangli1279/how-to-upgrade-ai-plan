@@ -2,9 +2,9 @@
 
 ![封面](../../cover-image/ai-coding-workflow/cover.png)
 
-最近用 AI 工具全程完成了一个 web 版宏观经济分析报告，从数据分析、内容收集，到 React 前端实现，几乎没有手动写一行代码。
+最近使用 AI 工具完成了一个 WEB 版宏观经济分析报告，从数据分析、内容收集，到前端实现，几乎没有手动写一行代码，在此分享一下这次报告制作的过程。
 
-这篇文章记录整个过程——工具怎么选、**Agent Skills** 怎么用、**AI Coding** 的完整工作流是什么样的。
+这篇文章记录整个过程，包括工具怎么选、**Agent Skills** 怎么用、我们所使用的 **AI Coding** 工作流。
 
 **本文内容：**
 - **01 工具全景**：四类 AI 工具的定位，以及这份报告的具体选型
@@ -23,9 +23,9 @@
 | **原型生成类** | Google AI Studio / Bolt.new / v0.dev / Lovable | 描述需求直接生成可运行的应用，不需要动手写代码 |
 | **AI IDE 类** | Claude Code / Cursor / Windsurf / GitHub Copilot | 直接读项目文件、运行代码、改文件，AI 真正帮你写代码 |
 
-这份报告具体用到了 NotebookLM、Google AI Studio 和 Claude Code，后面会展开说。
+具体用到了 NotebookLM、Google AI Studio 和 Claude Code，后面会展开说。
 
-选型逻辑是：对话类工具没法一次性消化 100+ 篇文档（context window 有上限），所以内容收集这件事交给原生支持大规模文档检索的 NotebookLM；框架原型用免费的 Google AI Studio 快速生成，省掉反复调风格时的 token 消耗；本地代码迭代、填充内容、处理细节，才是 Claude Code 最擅长的事。三类工具串联，各干各最擅长的部分。
+选型逻辑是：对话类工具只能聊天，没法真正执行任务——它能告诉你怎么做，但不会帮你做出来，所以整个工作流里它没有占主要位置；内容收集这件事交给原生支持大规模文档检索的 NotebookLM，它能完全消化 100+ 篇文档并按需检索；框架原型用免费的 Google AI Studio 快速生成，省掉反复调风格时的 token 消耗；本地代码迭代、填充内容、处理细节，才是 Claude Code 最擅长的事。三类工具串联，各干各最擅长的部分。
 
 ![四类 AI 工具定位全景对比](imgs/01-comparison-ai-tools-overview.png)
 
