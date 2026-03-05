@@ -16,6 +16,8 @@
 
 ## 01 做这份报告用到的工具
 
+![AI工具全景：四类工具的定位与分工](imgs/01-framework-tool-landscape.png)
+
 做这份报告用到了四类工具：
 
 | 类型 | 代表工具 | 一句话定位 |
@@ -40,6 +42,8 @@
 
 ### 为什么需要它
 
+![通用AI能力缺口：Skill桥接专业场景](imgs/02-infographic-skill-gap.png)
+
 AI 通用能力很强，但在专业场景下有时候会答得不够准，它不了解你的行业惯例、数据规范，或者某个领域的标准分析方法，而 Agent Skills 就是针对这种问题的一个解法。
 
 Agent Skills 是一套开放标准，本质是给 AI 安装"专业技能包"。每个 skill 是一个文件夹，里面一个 `SKILL.md`，写清楚 AI 在这个场景下该怎么思考、用什么方法、输出什么格式。
@@ -62,6 +66,8 @@ pdf-skill/
 
 ### 生态现状
 
+![Agent Skills生态时间线：从Anthropic发布到各平台接入](imgs/03-timeline-skill-ecosystem.png)
+
 Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Codex、Cursor、GitHub、Microsoft 已将其集成进各自产品。
 
 我最常用的一个 Agent Skills 平台是 Vercel 推出的 [skills.sh](https://skills.sh)，它是一个开放的 skill 目录，可以搜索和安装各类 skill，支持 Claude Code、Cursor、GitHub Copilot 等主流 AI IDE 一键配置。
@@ -69,6 +75,8 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 ### 使用前后对比
 
 #### 测试数据集
+
+![GDP测试数据集：24季度×74指标，覆盖5大维度](imgs/04-infographic-gdp-dataset.png)
 
 国家统计局 GDP 季度数据，时间范围 2020Q1—2025Q4，共 24 个季度、74 个指标，覆盖：
 - 名义 GDP 当季值 + 实际增速（不变价当季同比）
@@ -80,6 +88,8 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 **场景**：用同一个提示词让 Claude Code 读取这份数据，分别在安装 skill 前后各生成一份报告，直接对比差距。
 
 #### 安装 Skill 之前
+
+![安装Skill之前：4个专业性缺陷](imgs/05-infographic-before-skill.png)
 
 提示词：
 
@@ -97,6 +107,8 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 - 结论全是定性判断，"增速保持稳定"——稳定到什么程度？没有数据支撑
 
 #### 安装之后
+
+![安装统计分析Skill后：IQR异常值检测、通缩量化、风险路径追踪](imgs/06-infographic-after-skill.png)
 
 Skill 可以在 [skills.sh](https://skills.sh) 搜索和安装，用 `npx skills add` 命令一行搞定：
 
@@ -126,6 +138,8 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 #### 效果对比
 
+![7维度评分对比：安装前7.40分 vs 安装后8.90分](imgs/07-comparison-skill-score.png)
+
 为了让对比更客观中立，没有用 Claude 来评估自己的输出——评自己总有偏袒之嫌。而是把两份报告交给 OpenAI Codex，以「以资深宏观分析师视角，对以下 7 个维度分别打分（满分 10 分），结合权重算出加权总分，每项附简短评语」为提示词，让竞品 AI 来裁判。得分如下：
 
 | 评价维度 | 权重 | 安装前 | 安装后 |
@@ -151,6 +165,8 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 ### Step 1：Claude Code 提炼报告编写指南
 
+![Step 1：7篇历史报告 → Claude Code提炼 → 编写指南](imgs/08-flowchart-step1-guideline.png)
+
 这里所说的「从零」，是指从原始数据和提示词出发，不手动写代码、不手动排版——但并不意味着没有任何积累。团队历史上已有 7 篇宏观经济分析报告，这是真实的专业积累，Step 1 正是要把它用起来。
 
 在做内容之前，先用 Claude Code 读取这 7 篇历史报告，让它从中提炼出一份指南文档——宏观经济分析报告应该包含哪些模块、每个模块的写作逻辑是什么、有哪些关键指标必须覆盖。之所以用历史报告而非直接让 AI 写一份通用指南，是为了让指南延续团队自身的分析框架和行文风格，而不是套用 AI 的默认模板。
@@ -166,6 +182,8 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 这份指南后续会作为整份报告的内容基准，带入 Step 2，确保 AI 产出的内容符合专业报告的分析逻辑。
 
 ### Step 2：NotebookLM 收集内容 + 生产初稿
+
+![Step 2：105篇文章+指南注入System Prompt → NotebookLM → 各章节初稿](imgs/09-flowchart-step2-notebooklm.png)
 
 这里选 NotebookLM 而不是直接让 Claude Code 读取本地文件，是因为参考文章数量非常多——这份报告一共参考了 105 篇，来自国家统计局、微信公众号等渠道的当季解读文章，文档体量远超 Claude Code 单次 context window 的上限，无法一次性全部读入。NotebookLM 的原生 RAG 架构专为大量文档的联合检索设计，上传后即可以完成跨文档问答。
 
@@ -187,6 +205,8 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 ### Step 3：Google AI Studio 生成前端框架
 
+![Step 3：提示词 → Google AI Studio免费生成 → 可运行React框架](imgs/10-flowchart-step3-aistudio.png)
+
 这一步的目标不是生成完整内容，只是拿到一个可以跑起来的基础项目模板——页面结构、视觉风格、交互逻辑定好，内容全部留空，后续交给 Claude Code 在本地迭代填充。
 
 选 Google AI Studio 有个很实际的原因：**它免费，而且可以使用 Gemini 3 Pro，做前端效果很不错。** 模板阶段往往要反复调风格——换布局、换配色、换交互方式，这个阶段如果用 Claude Code 来回生成，token 额度消耗会很快。用 AI Studio 把框架定好，再交给 Claude Code 做内容填充，是更省成本的做法。
@@ -206,6 +226,8 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 AI Studio 直接输出一套可以运行的 React 项目框架，下载到本地，作为后续迭代的起点。
 
 ### Step 4：AI Coding 工具 + Agent Skill 迭代
+
+![Step 4：基础组件保障多人协作一致性，33组件+27数据文件架构](imgs/11-framework-step4-aicoding.png)
 
 和 Section 02 展示的统计分析 skill 同样的机制，这里为 React 开发装上专业规范——AI Studio 下载下来的项目是 React 框架，在 AI Coding 工具里先装上 Vercel Labs 维护的 `vercel-react-best-practices` skill（同样从 [skills.sh](https://skills.sh) 安装）。这个 skill 按影响程度分级，涵盖消除数据瀑布、包大小优化、服务端性能、重新渲染优化等方向——装上之后，AI Coding 工具在迭代修改时会自动按照这套规范来生成代码，避免写出性能问题或结构混乱。
 
@@ -234,6 +256,8 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 
 ### Step 5：部署上线
 
+![Step 5：40张幻灯片交互演示系统，16:9自适应，部署上线](imgs/12-infographic-step5-deploy.png)
+
 完成全部代码迭代后，部署到腾讯云，浏览器直接访问：**[https://hongguanppt.top](https://hongguanppt.top)**
 
 **最终交付：40 张幻灯片的交互式演示系统**
@@ -260,6 +284,8 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 *（成品截图见下）*
 
 ## 04 总结
+
+![总结：专业工具分段负责 + Agent Skill关键节点注入专业规范的可复用框架](imgs/13-framework-summary-workflow.png)
 
 整个工作流的核心逻辑可以用一句话总结：**专业工具分段负责，Agent Skill 在关键节点注入专业规范**。
 
