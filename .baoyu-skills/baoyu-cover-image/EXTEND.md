@@ -11,8 +11,8 @@ preferred_rendering: null
 preferred_text: title-only
 preferred_mood: balanced
 default_aspect: "2.35:1"
-default_output_dir: independent
+default_output_dir: imgs-subdir
 quick_mode: false
-language: zh
+language: null
 custom_palettes: []
 ---

@@ -1,8 +1,8 @@
 # 怎么用 AI 工具做出一个 WEB 版宏观经济分析报告
 
-![封面](../../cover-image/ai-coding-workflow/cover.png)
+![封面](imgs/cover.png)
 
-## 前言
+## 00 前言
 
 上次使用 AI 工具完成了2025年第四季度的 WEB 版宏观经济分析报告，从数据分析、内容收集，到前端实现，都是在 AI 工具的加持下完成的，在此分享一下这次报告制作的过程。
 
@@ -15,8 +15,6 @@
 - **04 总结**：工作流的核心逻辑，以及这套流程的复用方式
 
 ## 01 做这份报告用到的工具
-
-![四类 AI 工具定位全景对比](imgs/01-comparison-ai-tools-overview.png)
 
 做这份报告用到了四类工具：
 
@@ -64,15 +62,15 @@ pdf-skill/
 
 ### 生态现状
 
-![Agent Skills 原理：Agent 是新 OS，Skill 是装在上面的专业能力包](imgs/02-framework-agent-skills-principle.png)
-
 Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Codex、Cursor、GitHub、Microsoft 已将其集成进各自产品。
 
 我最常用的一个 Agent Skills 平台是 Vercel 推出的 [skills.sh](https://skills.sh)，它是一个开放的 skill 目录，可以搜索和安装各类 skill，支持 Claude Code、Cursor、GitHub Copilot 等主流 AI IDE 一键配置。
 
 ### 使用前后对比
 
-**数据集**：国家统计局 GDP 季度数据，时间范围 2020Q1—2025Q4，共 24 个季度、74 个指标，覆盖：
+#### 测试数据集
+
+国家统计局 GDP 季度数据，时间范围 2020Q1—2025Q4，共 24 个季度、74 个指标，覆盖：
 - 名义 GDP 当季值 + 实际增速（不变价当季同比）
 - 三大产业及细分行业拆分（工业、建筑业、批发零售、金融、房地产等）
 - GDP 平减指数（衡量价格水平变化）
@@ -98,15 +96,13 @@ Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Code
 - 区域分析只有规模排名，广东第一、江苏第二，但没有增速分化，不知道谁在加速、谁在减速
 - 结论全是定性判断，"增速保持稳定"——稳定到什么程度？没有数据支撑
 
-#### 安装 Skill
+#### 安装之后
 
 Skill 可以在 [skills.sh](https://skills.sh) 搜索和安装，用 `npx skills add` 命令一行搞定：
 
 ```bash
 npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 ```
-
-#### 安装之后
 
 同样的提示词，同样的数据，生成的报告：
 
@@ -128,6 +124,8 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 - IT 服务业（信息传输、软件和信息技术服务业）连续 8 个季度保持 10%+ 增速——从 2024Q1 的 13.7% 到 2025Q4 的 10.7%，是全文唯一的强正向信号，被单独标注为「数字经济驱动的结构性亮点」
 - 区域格局出现逆转：西部省份省均增速（4.4%）高于东部（3.9%），属近年罕见格局，报告将其标注为值得追踪的趋势性变化，而不只是规模排名
 
+#### 效果对比
+
 为了让对比更客观中立，没有用 Claude 来评估自己的输出——评自己总有偏袒之嫌。而是把两份报告交给 OpenAI Codex，以「以资深宏观分析师视角，对以下 7 个维度分别打分（满分 10 分），结合权重算出加权总分，每项附简短评语」为提示词，让竞品 AI 来裁判。得分如下：
 
 | 评价维度 | 权重 | 安装前 | 安装后 |
@@ -145,15 +143,11 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 同样的 AI，同样的数据，同样的提示词——装了统计分析 skill，分析质量从"描述性概览"变成了"统计驱动的经济诊断"。
 
-![统计分析 Skill 安装前后七维度得分对比（裁判：OpenAI Codex）](imgs/03-comparison-skill-before-after.png)
-
 我觉得这个类比很贴切：Agent Skills 就是新时代的 App——Agent 是新 OS，Skill 是装在上面的专业能力包，写一次、到处用、社区共享，和当年 App Store 的逻辑如出一辙。不需要懂 Prompt 工程，装个 Skill 就能让 AI 在特定领域直接变专业。
 
 ## 03 完整工作流：五步从数据到报告上线
 
 这份报告是我和璐源、天琦三个人一起完成的。NotebookLM、Google AI Studio、Claude Code、Agent Skills——这四个工具在整个过程里是串联关系，每一步各有分工。
-
-![五步 AI Coding 工作流：从原始数据到报告上线](imgs/04-flowchart-five-step-workflow.png)
 
 ### Step 1：Claude Code 提炼报告编写指南
 
@@ -191,7 +185,7 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 这一步做的不只是信息收集，而是同时完成内容生产——产出的已经是按专业报告格式和分析逻辑组织好的各章节初稿，可以直接进入后续流程。
 
-### Step 3：Google AI Studio 生成 React 框架
+### Step 3：Google AI Studio 生成前端框架
 
 这一步的目标不是生成完整内容，只是拿到一个可以跑起来的基础项目模板——页面结构、视觉风格、交互逻辑定好，内容全部留空，后续交给 Claude Code 在本地迭代填充。
 
@@ -231,8 +225,6 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 
 基础组件做好之后，不管谁用什么工具生成新的幻灯片页，都是在组合复用同一套组件。视觉一致性由组件自身保证，不依赖某个 AI 的\"记忆\"，也不依赖团队成员之间的口头约定——这才是可以多人持续迭代的结构。
 
-![基础组件架构：6个基础组件被 33 个幻灯片页面复用，保障多人协作一致性](imgs/05-framework-component-architecture.png)
-
 **另一个配套做法**：每一页幻灯片对应一个独立的 `.tsx` 文件，比如 `CoverSlide.tsx`、`TableOfContentsSlide.tsx`、`ContentSlide05.tsx`。好处有两层：
 
 - **对人**：根据网页上显示的页码，能立刻知道要改哪个文件，不用在代码里翻找
@@ -264,8 +256,6 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 每张内容页由**论点卡片 + 折线图/堆叠柱状图 + 数据表格**组成，复用 `BaseContentSlide`、`BaseCard`、`BaseLineChart`、`BaseStackedBarChart`、`BaseTable` 等基础组件，视觉一致性由组件自身保证。图表数据来自各章节对应的数据文件。
 
 整体视觉延续 Step 3 的深蓝主色（`#051c2c`）、极简网格布局、入场动效——无需设计工具，浏览器打开即可用于演示或分发。
-
-![最终交付：40张幻灯片、8章节、33组件、27数据文件、约7000行代码](imgs/06-infographic-final-deliverable.png)
 
 *（成品截图见下）*
 
