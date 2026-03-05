@@ -2,7 +2,9 @@
 
 ![封面](../../cover-image/ai-coding-workflow/cover.png)
 
-最近使用 AI 工具完成了一个 WEB 版宏观经济分析报告，从数据分析、内容收集，到前端实现，几乎没有手动写一行代码，在此分享一下这次报告制作的过程。
+## 前言
+
+上次使用 AI 工具完成了2025年第四季度的 WEB 版宏观经济分析报告，从数据分析、内容收集，到前端实现，都是在 AI 工具的加持下完成的，在此分享一下这次报告制作的过程。
 
 这篇文章记录整个过程，包括工具怎么选、**Agent Skills** 怎么用、我们所使用的 **AI Coding** 工作流。
 
@@ -14,6 +16,8 @@
 
 ## 01 做这份报告用到的工具
 
+![四类 AI 工具定位全景对比](imgs/01-comparison-ai-tools-overview.png)
+
 做这份报告用到了四类工具：
 
 | 类型 | 代表工具 | 一句话定位 |
@@ -23,29 +27,50 @@
 | **原型生成类** | Google AI Studio / Bolt.new / v0.dev / Lovable | 描述需求直接生成可运行的应用，不需要动手写代码 |
 | **AI IDE 类** | Claude Code / Cursor / Windsurf / GitHub Copilot | 直接读项目文件、运行代码、改文件，AI 真正帮你写代码 |
 
-具体用到了 NotebookLM、Google AI Studio 和 Claude Code，后面会展开说。
+其中，主要用到了 NotebookLM、Google AI Studio 和 Claude Code，后面会展开说。
 
-选型逻辑是：对话类工具只能聊天，没法真正执行任务——它能告诉你怎么做，但不会帮你做出来，所以整个工作流里它没有占主要位置；内容收集这件事交给原生支持大规模文档检索的 NotebookLM，它能完全消化 100+ 篇文档并按需检索；框架原型用免费的 Google AI Studio 快速生成，省掉反复调风格时的 token 消耗；本地代码迭代、填充内容、处理细节，才是 Claude Code 最擅长的事。三类工具串联，各干各最擅长的部分。
+选型逻辑是：
 
-![四类 AI 工具定位全景对比](imgs/01-comparison-ai-tools-overview.png)
+- 对话类工具只能聊天，没法真正执行任务，它能告诉你怎么做，但不会帮你做出来，所以整个工作流里它没有占主要位置
+- 内容收集这件事交给原生支持大规模文档检索的 NotebookLM，它能完全消化大量文档并具有优秀的检索能力
+- Web 原型用免费的 Google AI Studio 快速生成，省掉反复调风格时的 token 消耗
+- 本地代码迭代、填充内容、处理细节使用 Claude Code 等 AI Coding 工具进行处理
+
+三类工具串联，各干各最擅长的部分，完成最终的报告生成。
 
 ## 02 Agent Skills：让 AI 在专业场景下变专业
 
 ### 为什么需要它
 
-AI 通用能力很强，但在专业场景下有时候会答得不够准——它不了解你的行业惯例、数据规范，或者某个领域的标准分析方法。Agent Skills 就是针对这个问题的解法。
+AI 通用能力很强，但在专业场景下有时候会答得不够准，它不了解你的行业惯例、数据规范，或者某个领域的标准分析方法，而 Agent Skills 就是针对这种问题的一个解法。
 
-Agent Skills 是一套开放标准，本质是给 AI 安装"专业技能包"。每个 skill 是一个文件夹，里面一个 `SKILL.md`，写清楚 AI 在这个场景下该怎么思考、用什么方法、输出什么格式。`SKILL.md` 在 AI 启动时自动注入系统上下文，当任务内容与 skill 的适用场景匹配时触发生效；也可以用 `/技能名` 手动调用。
+Agent Skills 是一套开放标准，本质是给 AI 安装"专业技能包"。每个 skill 是一个文件夹，里面一个 `SKILL.md`，写清楚 AI 在这个场景下该怎么思考、用什么方法、输出什么格式。
 
-装了统计分析 skill，AI 就会用 IQR 等标准统计方法识别异常值；装了 SQL 规范 skill，它就会按你们团队的命名规范写查询。
+```
+pdf-skill/
+├── SKILL.md (main instructions)
+├── FORMS.md (form-filling guide)
+├── REFERENCE.md (detailed API reference)
+└── scripts/
+    └── fill_form.py (utility script)
+```
+
+调用方式：
+
+- `SKILL.md` 在 AI 启动时自动注入系统上下文，当任务内容与 skill 的适用场景匹配时触发生效
+- 也可以通过指定 `技能名` 的方式手动调用
+
+比如说，装了统计分析 skill，AI 就会用 IQR 等标准统计方法识别异常值；装了 SQL 规范 skill，它就会按你们团队的命名规范写查询。
 
 ### 生态现状
 
-Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Codex、Cursor、GitHub、Microsoft 已将其集成进各自产品。Vercel 随后推出了配套的 [skills.sh](https://skills.sh)——一个开放的 skill 目录，可以搜索和安装各类 skill，支持 Claude Code、Cursor、GitHub Copilot 等主流 AI IDE。
-
 ![Agent Skills 原理：Agent 是新 OS，Skill 是装在上面的专业能力包](imgs/02-framework-agent-skills-principle.png)
 
-### 实际效果对比
+Anthropic 在 2025 年 12 月把它作为开放标准发布，现在 OpenAI Codex、Cursor、GitHub、Microsoft 已将其集成进各自产品。
+
+我最常用的一个 Agent Skills 平台是 Vercel 推出的 [skills.sh](https://skills.sh)，它是一个开放的 skill 目录，可以搜索和安装各类 skill，支持 Claude Code、Cursor、GitHub Copilot 等主流 AI IDE 一键配置。
+
+### 使用前后对比
 
 **数据集**：国家统计局 GDP 季度数据，时间范围 2020Q1—2025Q4，共 24 个季度、74 个指标，覆盖：
 - 名义 GDP 当季值 + 实际增速（不变价当季同比）
