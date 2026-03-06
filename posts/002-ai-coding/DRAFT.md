@@ -10,8 +10,8 @@
 
 **本文内容：**
 - **01 工具全景**：四类 AI 工具的定位，以及这份报告的具体选型
-- **02 完整工作流**：五步从数据到报告上线的完整过程，含 Agent Skills 实战对比
-- **03 总结**：工作流的核心逻辑，以及这套流程的复用方式
+- **02 工作流框架**：核心逻辑、可复用性，以及使用第三方工具前必须考虑的数据安全问题
+- **03 完整工作流**：六步从数据到报告上线的完整过程，含 Agent Skills 实战对比
 
 ## 01 做这份报告用到的工具
 
@@ -35,9 +35,67 @@
 
 其中，我们主要用到了 NotebookLM、Google AI Studio 和 Claude Code，三类工具串联，各干各最擅长的部分，完成最终的报告生成，后面会展开说。
 
-## 02 完整工作流：五步从数据到报告上线
+## 02 工作流框架
 
-这份报告是我和璐源、天琦三个人一起完成的，主要使用 NotebookLM、Google AI Studio、Claude Code 等 AI 工具在整个过程里是串联关系，每一步各有分工。
+![总结：专业工具分段负责 + Agent Skill关键节点注入专业规范的可复用框架](imgs/13-framework-summary-workflow.png)
+
+整个工作流的核心逻辑可以用一句话总结：**专业工具分段负责，Agent Skill 在关键节点注入专业规范**。
+
+这套框架抽象为三个层次：
+
+| 层次 | 工具 | 职责 |
+|---|---|---|
+| **内容层** | NotebookLM | 大规模文档检索 + 结构化内容生产 |
+| **原型层** | Google AI Studio | 免费快速生成可运行的前端框架 |
+| **实现层** | Claude Code | 本地精细迭代、填充内容、部署交付 |
+
+Agent Skill 作为横切关注点，在任何需要专业规范的节点注入——内容生产阶段注入统计分析规范，代码实现阶段注入 React 最佳实践。每个 Skill 只需要安装一次，对整个项目生命周期持续生效。
+
+### 复用性
+
+这套流程可以直接复用：换一个数据集、换一个行业、换一套历史报告——框架不变，工具不变，Skill 不变，只有内容换掉。
+
+具体映射：
+
+- **Step 1**（历史报告 → 编写指南）适用于任何有历史积累的报告类型，换一批历史文件即可
+- **Step 2/3**（文章 → 知识库 → 初稿）只需把参考文章替换成新领域的资料
+- **Step 4**（前端框架生成）提示词稍作修改可以生成不同风格的演示系统
+- **Step 5**（基础组件 + Skill）完全通用，组件和规范不变，只替换内容数据
+
+### 数据安全
+
+这套工作流里用到了 NotebookLM 和 Google AI Studio 等第三方在线服务，**使用前必须先判断数据的敏感程度**——上传到这些平台的内容会经过第三方服务器处理，不适合放公司内部的敏感数据。
+
+**适合使用第三方工具的数据：**
+- 政府或监管机构对外公开的统计数据（国家统计局、央行等）
+- 媒体、研究机构对外发布的分析文章和报告
+- 已完成脱敏处理、不含可识别信息的数据集
+
+**不适合使用第三方工具的数据：**
+- 公司内部财务数据、客户数据、经营数据
+- 任何涉及个人隐私的信息
+- 竞争敏感信息，如战略规划、未发布的产品或合同细节
+
+这份宏观经济报告用到的数据全部来自公开渠道（国家统计局统计数据、公开发布的解读文章），所以可以直接上传到 NotebookLM 和 AI Studio。如果场景换成公司内部业务分析，需要把在线工具替换为本地部署的方案，或使用与服务商签订了数据安全协议的企业版服务。
+
+## 03 完整工作流：六步从数据到报告上线
+
+这份报告主要使用 NotebookLM、Google AI Studio、Claude Code 等 AI 工具在整个过程里是串联关系，每一步各有分工。
+
+### 工作流全景
+
+在展开每一步之前，先给整个流程一张全景图：
+
+| 步骤 | 工具 | 做什么 | 输出 |
+|---|---|---|---|
+| Step 1 | Claude Code | 读取 7 篇历史报告，提炼编写指南 | 报告框架 + 写作规范文档 |
+| Step 2 | NotebookLM | 上传 105 篇参考文章，注入编写指南 | 可跨文档检索的知识库 |
+| Step 3 | NotebookLM + Agent Skill | 按章节逐一提问，生产内容初稿 | 各章节结构化初稿 |
+| Step 4 | Google AI Studio | 用提示词生成前端框架 | 可运行的 React 项目模板 |
+| Step 5 | Claude Code + Agent Skill | 填充内容、迭代样式、拆分组件 | 完整代码库（33 组件 + 27 数据文件）|
+| Step 6 | 腾讯云 | 部署上线 | 40 张幻灯片的在线演示系统 |
+
+三类工具各管一段：NotebookLM 负责内容生产，Google AI Studio 负责原型生成，Claude Code 负责代码实现。Agent Skill 在 Step 3 和 Step 5 分别注入统计分析规范和 React 最佳实践，让 AI 在专业场景下自动变专业。
 
 ### Step 1：Claude Code 提炼报告编写指南
 
@@ -55,13 +113,19 @@
 
 这份指南后续会作为整份报告的内容基准，带入 Step 2，确保 AI 产出的内容符合专业报告的分析逻辑。
 
-### Step 2：NotebookLM 收集内容 + 生产初稿
+### Step 2：NotebookLM 收集内容
 
 ![Step 2：105篇文章+指南注入System Prompt → NotebookLM → 各章节初稿](imgs/09-flowchart-step2-notebooklm.png)
 
 这里选 NotebookLM 是因为 NotebookLM 天生就是为了大量文档的联合检索而设计的，我们的参考文章数量非常多，一共参考了 105 篇，来自国家统计局、微信公众号等渠道的当季解读文章，上传到 NotebookLM 后即可以完成跨文档问答，而且它底层使用的是 Gemini 3 系列的模型，在模型的基础能力上非常强力，十分契合它的专业能力。
 
-在 NotebookLM 里上传这 105 篇宏观经济解读文章，同时把 Step 1 生成的编写指南放进 NotebookLM 的系统提示词（Instructions）里，这样每次提问时 AI 都会自动按照指南的框架和写作逻辑来产出内容，不需要每次重复粘贴。然后按章节逐一提问：
+在 NotebookLM 里上传这 105 篇宏观经济解读文章，同时把 Step 1 生成的编写指南放进 NotebookLM 的系统提示词（Instructions）里，这样每次提问时 AI 都会自动按照指南的框架和写作逻辑来产出内容，不需要每次重复粘贴。
+
+### Step 3：NotebookLM 生产初稿
+
+这一步的主角是 NotebookLM——内容从哪里来、怎么检索、按什么结构输出，全部由它负责。Agent Skills 在此基础上作为辅助手段注入，补足专业分析方法上的缺口。
+
+按章节逐一提问：
 
 > "请整理出 GDP 章节的内容"
 
@@ -88,12 +152,12 @@
 
 ![通用AI能力缺口：Skill桥接专业场景](imgs/02-infographic-skill-gap.png)
 
-除了 NotebookLM，这一步我们同样引入了 **Agent Skills** 来辅助内容生产。NotebookLM 解决的是"从哪里找内容"的问题，而 Agent Skills 解决的是"用什么专业方法来分析和输出"的问题——AI 通用能力很强，但它不了解你的行业惯例、数据规范，或者某个领域的标准分析方法，Agent Skills 就是针对这种问题的解法。
+NotebookLM 解决的是"从哪里找内容"的问题，**Agent Skills** 在此基础上解决"用什么专业方法分析和输出"的问题——AI 通用能力很强，但它不了解你的行业惯例、数据规范、或某个领域的标准分析方法，Agent Skills 就是针对这种缺口的解法，让 NotebookLM 产出的内容在专业性上再上一个台阶。
 
 Agent Skills 是一套开放标准，本质是给 AI 安装"专业技能包"。每个 skill 是一个文件夹，里面最少会有一个 `SKILL.md` 文件，写清楚 AI 在这个场景下该怎么思考、用什么方法、输出什么格式。一个示例 skill 为例：
 
 ```
-pdf-skill/
+statistical-analysis/
 ├── SKILL.md (main instructions)
 ├── FORMS.md (form-filling guide)
 ├── REFERENCE.md (detailed API reference)
@@ -212,9 +276,9 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 我觉得这个类比很贴切：Agent Skills 就是新时代的 App——Agent 是新 OS，Skill 是装在上面的专业能力包，写一次、到处用、社区共享，和当年 App Store 的逻辑如出一辙。不需要懂 Prompt 工程，装个 Skill 就能让 AI 在特定领域直接变专业。
 
-### Step 3：Google AI Studio 生成前端框架
+### Step 4：Google AI Studio 生成前端框架
 
-![Step 3：提示词 → Google AI Studio免费生成 → 可运行React框架](imgs/10-flowchart-step3-aistudio.png)
+![Step 4：提示词 → Google AI Studio免费生成 → 可运行React框架](imgs/10-flowchart-step3-aistudio.png)
 
 这一步的目标不是生成完整内容，只是拿到一个可以跑起来的基础项目模板——页面结构、视觉风格、交互逻辑定好，内容全部留空，后续交给 Claude Code 在本地迭代填充。
 
@@ -234,11 +298,11 @@ npx skills add anthropics/knowledge-work-plugins --skill statistical-analysis
 
 AI Studio 直接输出一套可以运行的 React 项目框架，下载到本地，作为后续迭代的起点。
 
-### Step 4：AI Coding 工具 + Agent Skill 迭代
+### Step 5：AI Coding 工具 + Agent Skill 迭代
 
-![Step 4：基础组件保障多人协作一致性，33组件+27数据文件架构](imgs/11-framework-step4-aicoding.png)
+![Step 5：基础组件保障多人协作一致性，33组件+27数据文件架构](imgs/11-framework-step4-aicoding.png)
 
-和 Section 02 展示的统计分析 skill 同样的机制，这里为 React 开发装上专业规范——AI Studio 下载下来的项目是 React 框架，在 AI Coding 工具里先装上 Vercel Labs 维护的 `vercel-react-best-practices` skill（同样从 [skills.sh](https://skills.sh) 安装）。这个 skill 按影响程度分级，涵盖消除数据瀑布、包大小优化、服务端性能、重新渲染优化等方向——装上之后，AI Coding 工具在迭代修改时会自动按照这套规范来生成代码，避免写出性能问题或结构混乱。
+和 Step 3 展示的统计分析 skill 同样的机制，这里为 React 开发装上专业规范——AI Studio 下载下来的项目是 React 框架，在 AI Coding 工具里先装上 Vercel Labs 维护的 `vercel-react-best-practices` skill（同样从 [skills.sh](https://skills.sh) 安装）。这个 skill 按影响程度分级，涵盖消除数据瀑布、包大小优化、服务端性能、重新渲染优化等方向——装上之后，AI Coding 工具在迭代修改时会自动按照这套规范来生成代码，避免写出性能问题或结构混乱。
 
 ```bash
 npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices
@@ -246,7 +310,7 @@ npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices
 
 然后用自然语言驱动迭代：
 
-> "把 Step 2 整理的报告内容填入对应幻灯片"
+> "把 Step 3 整理的报告内容填入对应幻灯片"
 
 AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码、填内容、调样式。
 
@@ -263,9 +327,9 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 
 按这套做法完成全部迭代后，整个项目共有 33 个组件文件（6 个基础组件 + 过渡页 + 各章节内容页）、27 个独立的数据文件（原始 xlsx 转换而来的 TypeScript 格式），总代码量约 7000 行。
 
-### Step 5：部署上线
+### Step 6：部署上线
 
-![Step 5：40张幻灯片交互演示系统，16:9自适应，部署上线](imgs/12-infographic-step5-deploy.png)
+![Step 6：40张幻灯片交互演示系统，16:9自适应，部署上线](imgs/12-infographic-step5-deploy.png)
 
 完成全部代码迭代后，部署到腾讯云，浏览器直接访问：**[https://hongguanppt.top](https://hongguanppt.top)**
 
@@ -294,10 +358,6 @@ AI Coding 工具读取项目文件，结合 skill 里的规范，自动改代码
 
 ## 03 总结
 
-![总结：专业工具分段负责 + Agent Skill关键节点注入专业规范的可复用框架](imgs/13-framework-summary-workflow.png)
+整个工作流的核心逻辑：**专业工具分段负责，Agent Skill 在关键节点注入专业规范**。每个工具干自己最擅长的事，串联起来才是高效率的工作流——统计分析 Skill 让报告从描述性概览变成统计驱动的经济诊断，React 最佳实践 Skill 让代码迭代自带规范约束。
 
-整个工作流的核心逻辑可以用一句话总结：**专业工具分段负责，Agent Skill 在关键节点注入专业规范**。
-
-NotebookLM 处理大量文档检索最在行，用它做内容生产；Google AI Studio 免费生成可运行的前端框架，用它做原型；Claude Code 处理本地代码迭代，用它做实现——每个工具干自己最擅长的事，串联起来才是高效率的工作流。统计分析 Skill 让报告从描述性概览变成统计驱动的经济诊断，React 最佳实践 Skill 让代码迭代自带规范约束，而这些 Skill 只需要安装一次，对整个项目生命周期持续生效。
-
-这套流程可以直接复用：换一个数据集、换一个行业、换一套历史报告——框架不变，工具不变，只有内容不同。
+这套流程可以直接复用：换一个数据集、换一个行业、换一套历史报告——框架不变，工具不变，只有内容不同。使用第三方工具时，确保数据来自公开渠道，公司内部敏感数据需替换为本地部署方案。
